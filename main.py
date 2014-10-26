@@ -56,51 +56,50 @@ def experiment():
 	max_stim = psycloud_client.get_max_stimulus_count(participant_id) - 1
 	r = None # This will contain the previous response variables if they exist but defaults to None
 
-	if current_stim > 0:
+	if "responses" in request.form:
+		form_keys = request.form.keys()
+		resp_keys = []
+		for key in form_keys:
+			s = key.split('_')
+			if s[0] == 'resp':
+				resp_keys.append( [ s[1], int(s[2]), key ] )
+		resp_keys.sort()
+		r = {}
+		for key in resp_keys:
+			name = key[0]
+			if r.has_key(name):
+				r[name].append(request.form[key[2]])
+			else:
+				r[name] = [request.form[key[2]]]
 
-		if "responses" in request.form:
-			form_keys = request.form.keys()
-			resp_keys = []
-			for key in form_keys:
-				s = key.split('_')
-				if s[0] == 'resp':
-					resp_keys.append( [ s[1], int(s[2]), key ] )
-			resp_keys.sort()
-			r = {}
-			for key in resp_keys:
-				name = key[0]
-				if r.has_key(name):
-					r[name].append(request.form[key[2]])
-				else:
-					r[name] = [request.form[key[2]]]
-
-			# r now contains a dictionary of response variables... so save it.
+		# r now contains a dictionary of response variables... so save it.
+		try:
+			saved_response = psycloud_client.save_response(participant_id, current_stim,
+				{'variables': r})
+		except:
+			abort(500)
+		
+		if current_stim < max_stim:
+			# increment current stimulus
 			try:
-				saved_response = psycloud_client.save_response(participant_id, current_stim - 1, r)
+				success = psycloud_client.set_current_stimulus(participant_id, current_stim + 1)
 			except:
 				abort(500)
-			
-			if current_stim < max_stim:
-				# increment current stimulus
-				try:
-					success = psycloud_client.set_current_stimulus(participant_id, current_stim + 1)
-				except:
-					abort(500)
-				else:
-					if success:
-						current_stim += 1
-					else:
-						abort(500)
 			else:
-				# Experiment is over
-				conf_code = psycloud_client.get_confirmation_code(participant_id)
-				return render_template('%s/post_experiment.html'%exp_type, verification_code=conf_code)
-
+				if success:
+					current_stim += 1
+				else:
+					abort(500)
 		else:
-			# current stimulus is >0 but there was no response data... they probably reloaded
-			# or navigated back to the page. So load the current stimuli without saving a response
-			# and without incrementing the stimulus counter
-			pass
+			# Experiment is over
+			conf_code = psycloud_client.get_confirmation_code(participant_id)
+			return render_template('%s/post_experiment.html'%exp_type, verification_code=conf_code)
+
+	else:
+		# there was no response data... it's either first stimulus or they reloaded/navigated
+		# back to the page. So load the current stimuli without saving a response
+		# and without incrementing the stimulus counter
+		pass
 
 
 	try:
