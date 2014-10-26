@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Experiment</title>
+
+    <!-- Bootstrap -->
+    <link href="{{url_for('.static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('.static', filename='css/rangeslider.css')}}" rel="stylesheet">
+
+    </head>
+    <body>
+
+        <nav class="navbar navbar-default navbar-fixed-top" id="topnavbar" name="topnavbar">
+            <div class="container lead">
+                Later, scientists discovered that in addition to <strong>{{ stim.X[0] }}</strong>, all <strong>{{ stim.X[1] }}</strong> also have Enzyme-Q. Given this new information, what is the probability that each animal has Enzyme-Q? 
+            </div>
+            <div class="alert alert-warning" style="text-align:center">
+                <strong>IMPORTANT: </strong>Please modify your original judgements (if neccessary) in light of this new information.
+            </div>
+        </nav>
+
+        {% for y in stim.Y %}
+        <div class="container-fluid">
+            <div class="well">
+                <div class="row">
+                    <div class='col-xs-3 lead'>
+                        {{ y }}
+                    </div>
+                    <div class='col-xs-8 lead pull-left'>
+                        <input type="range" class="rangeslider" id="sl_{{ loop.index0 }}" min="0" max="100" step="1" value="0" data-rangeslider oninput="sl_{{ loop.index0 }}_label.innerHTML=value+'%'; resp_prob_{{ loop.index0 }}.value=value; resp_mod_{{ loop.index0 }}.value=1">
+                    </div>
+                    <div class='col-xs-1 lead pull-left'>
+                        <label for="sl_{{ loop.index0 }}" id="sl_{{ loop.index0 }}_label">0%</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 alert alert-info" style="text-align:center">
+                        Your original response was <strong>{{ prev.prob[loop.index0] }}%</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="container" style="text-align:center">
+            <form class="form" action="{{ url_for('experiment') }}" onsubmit="return validateForm()" method="post">
+            <!-- <form class="form" action="{{ url_for('test_response') }}" onsubmit="return validateForm()" method="post"> -->
+                <input type=hidden name="uid" value="{{ uid }}">
+                <input type=hidden name="exp_type" value="{{ exp_type }}">
+                <input type=hidden name="responses" value=1>
+
+                {% for y in stim.Y %}
+                <input type="hidden" name ="resp_mod_{{ loop.index0 }}" id="resp_mod_{{ loop.index0 }}" value=0>
+                <input type="hidden" name ="resp_prob_{{ loop.index0 }}" id="resp_prob_{{ loop.index0 }}" value=0>
+                {% endfor %}
+                
+                <input class="btn-primary btn" type=submit value="Submit">
+           </form>
+        </div>
+
+        <script type="text/JavaScript">
+
+        function validateForm() {
+            i = 0;
+            respmod = this['resp_mod_'+i]
+            valid = true
+            while(respmod != null) {
+                if (respmod.value == 0) {
+                    alert("You must move all of the sliders")
+                    return false
+                }
+                i++;
+                respmod = this['resp_mod_'+i]
+            }
+        }
+
+        </script>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{{url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+        <script src="{{url_for('.static', filename='js/rangeslider.min.js')}}"></script>
+
+        <script>
+            $(document).ready(function(){
+                $(document.body).css('padding-top', $('#topnavbar').height() + 10);
+                $(window).resize(function(){
+                    $(document.body).css('padding-top', $('#topnavbar').height() + 10);
+                });
+            });
+        </script>
+        
+    </body>
+</html>
+    

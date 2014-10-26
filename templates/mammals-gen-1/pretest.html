@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Practice</title>
+
+    <!-- Bootstrap -->
+    <link href="{{url_for('.static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('.static', filename='css/rangeslider.css')}}" rel="stylesheet">
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="page-header">
+                <h2>Practice</h2>
+            </div>
+
+            <h4>Here are some practice sliders <small>Please set them to the specified values</small></h4>
+            <div class="alert alert-warning"><strong>IMPORTANT: </strong>You must move every slider in order to move on.</div>
+        </div>
+        
+        <div class="container">
+            <div class="well">
+                <div class="row">
+                    <div class='col-xs-3'>
+                        Set this slider to 50%
+                    </div>
+                    <div class='col-xs-8'>
+                        <input type="range" class="rangeslider" id="sl1" min="0" max="100" step="1" value="0" data-rangeslider oninput="sl1_label.innerHTML=sl1.value+'%'; resp_test_1.value=value; resp_mod_1.value=1">
+                    </div>
+                    <div class='col-xs-1'>
+                        <label for="sl1" id="sl1_label">0%</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="well">
+                <div class="row">
+                    <div class='col-xs-3'>
+                        Set this slider to 100%
+                    </div>
+                    <div class='col-xs-8'>
+                        <input type="range" class="rangeslider" id="sl2" min="0" max="100" step="1" value="0" data-rangeslider oninput="sl2_label.innerHTML=sl2.value+'%'; resp_test_2.value=value; resp_mod_2.value=1">
+                    </div>
+                    <div class='col-xs-1'>
+                        <label for="sl2" id="sl2_label">0%</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="well">
+                <div class="row">
+                    <div class='col-xs-3'>
+                        Set this slider to 0%
+                    </div>
+                    <div class='col-xs-8'>
+                        <input type="range" class="rangeslider" id="sl3" min="0" max="100" step="1" value="0" data-rangeslider oninput="sl3_label.innerHTML=sl3.value+'%'; resp_test_3.value=value; resp_mod_3.value=1">
+                    </div>
+                    <div class='col-xs-1'>
+                        <label for="sl3" id="sl3_label">0%</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="text-info">hint: you need to move it away from zero and then back again</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <form class="form" action="{{ url_for('experiment') }}" onsubmit="return validateForm()" method="post">
+            <!-- <form class="form" action="{{ url_for('test_response') }}" onsubmit="return validateForm()" method="post"> -->
+                <input type=hidden name="uid" value="{{ uid }}">
+                <input type=hidden name="exp_type" value="{{ exp_type }}">
+                <input type=hidden name="responses" value=1>
+
+                <input type="hidden" name ="resp_mod_1" id="resp_mod_1" value=0>
+                <input type="hidden" name ="resp_mod_2" id="resp_mod_2" value=0>
+                <input type="hidden" name ="resp_mod_3" id="resp_mod_3" value=0>
+
+                <input type="hidden" name ="resp_test_1" id="resp_test_1" value=0>
+                <input type="hidden" name ="resp_test_2" id="resp_test_2" value=0>
+                <input type="hidden" name ="resp_test_3" id="resp_test_3" value=0>
+                
+                <input class="btn-primary" type=submit value="Begin Experiment">
+           </form>
+        </div>
+
+
+        <script type="text/JavaScript">
+
+        function validateForm() {
+            i = 1;
+            respmod = this['resp_mod_'+i]
+            valid = true
+            while(respmod != null) {
+                if (respmod.value == 0) {
+                    alert("You must move all of the sliders")
+                    return false
+                }
+                i++;
+                respmod = this['resp_mod_'+i]
+            }
+        };
+
+        </script>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{{url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+        <script src="{{url_for('.static', filename='js/rangeslider.min.js')}}"></script>
+        
+    </body>
+</html>
+    

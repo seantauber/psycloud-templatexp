@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stimuli</title>
+
+    <!-- Bootstrap -->
+    <link href="{{url_for('.static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <style>
+      .stimuli{
+        max-height: 65%;
+        width: auto;
+        transform: rotate({{stim.T}}deg);
+        -ms-transform: rotate({{ stim.T }}deg); 
+        -webkit-transform: rotate({{ stim.T }}deg);
+        -moz-transform: rotate({{ stim.T }}deg);
+        -o-transform: rotate({{ stim.T }}deg);
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <!-- <div class="container-fluid"> -->
+    <div style="height:100%; width:100%">
+      <div class="row">
+        <div class="col-md-12" style="text-align:center">
+          <!-- <img src="{{url_for('.static', filename='stim/%s.png'%stim.X)}}" style="max-height:65%;width:auto" align="middle" alt="The stimuli should appear here. If not, something went wrong." /> -->
+          <img src="{{url_for('.static', filename='seeing-scenes/stim/%s.png'%stim.X)}}" class="stimuli" align="middle" alt="The stimuli should appear here. If not, something went wrong." />
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-12" style="text-align:center">
+          <h3>Does the person see the star?</h3>
+          <h5>(Remember: You are looking down from above)</h5>
+          <form name="response_form" id="response_form" action="{{ url_for('experiment') }}" method="post">
+
+            <input type=hidden name=uid value={{ uid }}>
+            <input type=hidden name="exp_type" value="{{ exp_type }}">
+            <input type=hidden name=responses value=1>
+
+            <input type="hidden" id="resp_decision_0" name="resp_decision_0" value=-1>
+            
+            <button type="submit" id="yes_button" name="yes_button" style="width:100px;margin-right:50px" class="btn btn-default" onclick="resp_decision_0.value=1">Yes</button>
+
+            <button type="submit" id="no_button" name="no_button" style="width:100px" class="btn btn-default" onclick="resp_decision_0.value=0">No</button>
+
+          </form>
+        </div>
+      </div>
+      
+      <!-- <div class="row">
+        <div class="col-md-12" style="text-align:center">
+          {{ stimulus_number }} of 49
+        </div>
+      </div> -->
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+
+  </body>
+</html>

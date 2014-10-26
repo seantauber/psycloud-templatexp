@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Instructions</title>
+
+        <!-- Bootstrap -->
+        <link href="{{url_for('.static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+
+        <style>
+          .stimuli{
+            max-height: 65%;
+            width: auto;
+          }
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="page-header">
+                <h2>Instructions</h2>
+            </div>
+
+            <p>We are studying how people make judgments about simple, everyday things. You will be shown a set of scenes containing a person and an object. For each scene, your task is to judge whether or not the person can see the object.</p>
+
+            <p>Here is an example of a scene. The person is represented by the circle, and is facing in the direction of the arrow. You should assume that the person has normal vision, and is looking straight ahead in the direction they are facing. The object is represented by the star. In this case, the object is directly in front of the person and you would select YES: The person can see the star.<p>
+            <p>NOTE: The scene is a top-down view, so you are looking down on the person from above.</p>
+
+            <div style="text-align:center">
+                <img src="{{url_for('.static', filename='seeing-scenes/stim/0.png')}}" class="stimuli" align="middle" alt="The example should appear here. If not, something went wrong." />
+            </div>
+
+            <p>Here is another example. In this case, the object is behind the person and you would select NO: The person cannot see the star.</p>
+
+            <div style="text-align:center">
+                <img src="{{url_for('.static', filename='seeing-scenes/stim/180.png')}}" class="stimuli" align="middle" alt="The example should appear here. If not, something went wrong." />
+            </div>
+
+            <div>
+                <p>When you are ready, click the button below to begin the experiment.</p>
+            </div>
+
+            <div class="container" style="text-align:center">
+                <form class="form" action="{{ url_for('experiment') }}" method="post">
+                <!-- <form class="form" action="{{ url_for('test_response') }}" onsubmit="return validateForm()" method="post"> -->
+                    <input type=hidden name="uid" value="{{ uid }}">
+                    <input type=hidden name="exp_type" value="{{ exp_type }}">
+                    
+                    <input class="btn-primary" type=submit value="Next">
+               </form>
+            </div>
+
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{{url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+        
+    </body>
+</html>
+    

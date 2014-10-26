@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Study Info</title>
+
+    <!-- Bootstrap -->
+    <link href="{{url_for('.static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="page-header">
+                <h2>Study information and consent</h2>
+            </div>
+
+            <p>This is part of a study being run at the University of Adelaide</p>
+            <div class="alert alert-danger">By clicking <span class="label label-primary">Next</span> below you consent to take part in the study.</div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Details of the study</h3>
+                </div>
+                <div class="panel-body">
+                
+                    <p>The principal investigator is Daniel Navarro (daniel.navarro@adelaide.edu.au). For any questions regarding the ethics of the study, please contact the convenor of the Subcommittee for Human Research in the School of Psychology at the University of Adelaide, Dr. Paul Delfabbro (+61) 8 8313 4936. Please direct any questions about this study to Daniel Navarro.</p>
+
+                    <p>Although any data gained from this study may be published, you will not be identified and your personal details will not be divulged, nor will anything be linked to your Amazon ID. We use your Amazon ID merely to ensure you successfully completed the experiment and are paid. You may withdraw at any time, although you will not be paid unless you complete the study.</p>
+
+                    <p>You may only participate in this experiment once.</p>
+                </div>            
+
+                <div class="panel-footer">
+                    <p>Please enter your Mechanical Turk ID in the space below.</p>
+
+                    <form action="{{ url_for('register_with_coupon') }}" method="post">
+                            
+                        <input type=hidden name="exp" value="{{exp}}">
+                        <input type=hidden name="exp_type" value="{{exp_type}}">
+                        
+                        <input type=text name="reg_coupon">
+                            
+                        <input class="btn-primary" type=submit value="Next">
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{{url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+        
+    </body>
+</html>
+    

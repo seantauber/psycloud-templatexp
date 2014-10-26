@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Instructions</title>
+
+    <!-- Bootstrap -->
+    <link href="{{url_for('.static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="page-header">
+                <h2>Instructions</h2>
+            </div>
+
+            <p>In this study we are asking you to make judgments about the cause of some events. You will be given the outcomes of some events and some background information, and then asked to make judgments about the cause of the events.<p>
+
+            <p>For each event, you will use a slider to judge the probability that it has a particular cause. Your answers can range from 0% probablity (all the way to the left) to 100% probability (all the way to the right). All of the sliders are initially set to 0%.
+
+        </div>
+
+        <div class="container">
+            <form class="form" action="{{ url_for('experiment') }}" method="post">
+            <!-- <form class="form" action="{{ url_for('test_response') }}" onsubmit="return validateForm()" method="post"> -->
+                <input type=hidden name="uid" value="{{ uid }}">
+                <input type=hidden name="exp_type" value="{{ exp_type }}">
+                
+                <input class="btn-primary" type=submit value="Next">
+           </form>
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{{url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+        
+    </body>
+</html>
+    
