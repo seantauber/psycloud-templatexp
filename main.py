@@ -93,6 +93,7 @@ def experiment():
 		else:
 			# Experiment is over
 			conf_code = psycloud_client.get_confirmation_code(participant_id)
+			psycloud_client.set_current_status(participant_id, 'COMPLETED')
 			return render_template('%s/post_experiment.html'%exp_type, verification_code=conf_code)
 
 	else:
