@@ -9,3 +9,5 @@ lib/
 REST-API/app.yaml
 *.yaml
 
+#don't include configuration files
+*.cfg

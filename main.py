@@ -6,7 +6,11 @@ import json
 from psycloud_python.client import PsycloudClient
 from psycloud_python.custom_exceptions import DuplicateEntryError, ResourceError
 
-psycloud_client = PsycloudClient("http://psycloud-server-2.appspot.com")
+cfg_file = open('server.cfg')
+cfg = json.load(cfg_file)
+cfg_file.close()
+
+psycloud_client = PsycloudClient(cfg['server_url'])
 
 # Import the Flask Framework
 from flask import Flask, render_template, request, redirect, url_for, abort, jsonify
